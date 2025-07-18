@@ -1087,14 +1087,18 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
     return total + visibleInSection;
   }, 0);
 
+  // Only count questions as completed after clicking Next (not the current one)
   const completedQuestions = sections.slice(0, currentSection).reduce((total, section) => {
     const visibleInSection = section.questions.filter(q => 
       !q.condition || q.condition(userData)
     ).length;
     return total + visibleInSection;
-  }, 0) + currentQuestion;
+  }, 0) + Math.max(0, currentQuestion);
 
-  const progress = (completedQuestions / totalQuestions) * 100;
+  // Progress logic: progress = completedQuestions / totalQuestions, capped at 100%
+  const progress = totalQuestions > 0
+    ? Math.min((completedQuestions / totalQuestions) * 100, 100)
+    : 0;
   const isLastQuestion = currentSection === sections.length - 1 && currentQuestion === visibleQuestions.length - 1;
 
   // Remove the Loading... fallback and auto-advance if currentQuestion is out of bounds

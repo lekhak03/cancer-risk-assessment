@@ -212,34 +212,7 @@ const BasicQuestionnaire: React.FC<BasicQuestionnaireProps> = ({
       placeholder: 'Number of pregnancies (0 if none)',
       condition: (data: BasicUserData) => data.biologicalSex === 'female',
       defaultValue: 0,
-    },
-    {
-      id: 'mammogramHistory',
-      title: 'What is your mammogram screening history?',
-      type: 'radio' as const,
-      options: [
-        { value: 'never', label: 'Never had a mammogram' },
-        { value: 'irregular', label: 'Irregular screening' },
-        { value: 'regular', label: 'Regular screening as recommended' },
-        { value: 'enhanced', label: 'Enhanced screening (high risk)' },
-        { value: 'not_applicable', label: 'Not applicable (male)' },
-      ],
-      condition: (data: BasicUserData) => data.biologicalSex === 'female' || !data.biologicalSex,
-      defaultValue: 'never',
-    },
-    {
-      id: 'colonoscopyHistory',
-      title: 'What is your colonoscopy screening history?',
-      type: 'radio' as const,
-      options: [
-        { value: 'never', label: 'Never had a colonoscopy' },
-        { value: 'irregular', label: 'Irregular screening' },
-        { value: 'regular', label: 'Regular screening as recommended' },
-        { value: 'polyps', label: 'History of polyps found' },
-      ],
-      condition: (data: BasicUserData) => (data.age || 0) >= 40,
-      defaultValue: 'never',
-    },
+    }
   ];
 
   // Place getAllDefaultValues above handleNext
@@ -294,7 +267,11 @@ const BasicQuestionnaire: React.FC<BasicQuestionnaireProps> = ({
     }
   };
 
-  const progress = ((currentQuestion + 1) / visibleQuestions.length) * 100;
+  // Only count questions as completed after clicking Next (not the current one)
+  const completedQuestions = Math.max(0, currentQuestion);
+  const progress = visibleQuestions.length > 1
+    ? Math.min((completedQuestions / (visibleQuestions.length)) * 100, 100)
+    : 0;
   const isLastQuestion = currentQuestion === visibleQuestions.length - 1;
 
   if (!currentQuestionData) {
