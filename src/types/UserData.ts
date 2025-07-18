@@ -20,13 +20,13 @@ export interface UserData {
     multipleWithSameCancer?: boolean;
     earlyOnsetCancers?: boolean;
   };
-  geneticTesting?: {
-    brca1?: boolean;
-    brca2?: boolean;
-    lynchSyndrome?: boolean;
-    otherSyndromes?: string[];
-    interestedInTesting?: boolean;
-  };
+  // geneticTesting?: {
+  //   brca1?: boolean;
+  //   brca2?: boolean;
+  //   lynchSyndrome?: boolean;
+  //   otherSyndromes?: string[];
+  //   interestedInTesting?: boolean;
+  // };
 
   // Section 3: Personal Medical History
   previousCancer?: {

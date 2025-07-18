@@ -10,12 +10,29 @@ interface QuestionnaireProps {
   darkMode: boolean;
 }
 
+type Question = {
+  id: string;
+  title: string;
+  type: 'number' | 'radio' | 'checkbox' | 'text';
+  placeholder?: string;
+  required?: boolean;
+  options?: { value: string; label: string }[];
+  subtitle?: string;
+  // The following line fixes the error:
+  condition?: (data: UserData) => boolean;
+};
+
+type Section = {
+  title: string;
+  questions: Question[];
+};
+
 const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkMode }) => {
   const [currentSection, setCurrentSection] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userData, setUserData] = useState<UserData>({});
 
-  const sections = [
+  const sections: Section[] = [
     {
       title: 'Demographics & Basic Health',
       questions: [
@@ -190,7 +207,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
           title: 'What type of cancer were you diagnosed with?',
           type: 'text' as const,
           placeholder: 'Enter cancer type and year of diagnosis',
-          condition: (data: UserData) => data.previousCancer === 'yes',
+          condition: (data: UserData) => typeof data.previousCancer === 'string' ? data.previousCancer === 'yes' : data.previousCancer?.diagnosed === true,
         },
         {
           id: 'benignConditions',
@@ -430,14 +447,14 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'weekly', label: 'Weekly' },
             { value: 'daily', label: 'Daily or almost daily' },
           ],
-          condition: (data: UserData) => data.alcoholConsumption !== 'never',
+          condition: (data: UserData) => data.alcoholConsumption?.currentStatus !== 'never',
         },
         {
           id: 'alcoholYears',
           title: 'For how many years have you been drinking alcohol regularly?',
           type: 'number' as const,
           placeholder: 'Number of years',
-          condition: (data: UserData) => data.alcoholConsumption !== 'never',
+          condition: (data: UserData) => data.alcoholConsumption?.currentStatus !== 'never',
         },
       ],
     },
@@ -569,7 +586,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
           title: 'For how many years were you exposed to asbestos?',
           type: 'number' as const,
           placeholder: 'Number of years',
-          condition: (data: UserData) => data.occupationalExposures?.asbestos,
+          condition: (data: UserData) => !!data.occupationalExposures?.asbestos,
         },
         {
           id: 'shiftWork',

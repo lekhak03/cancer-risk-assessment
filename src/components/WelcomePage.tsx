@@ -170,7 +170,7 @@ const WelcomePage: React.FC<WelcomePageProps> = ({ onStart, darkMode }) => {
         </div>
 
         <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-          <p>✓ Your data is private and secure</p>
+          <p>✓ Your data is private and secure.</p>
           <p>✓ Results are for educational purposes only</p>
           <p>✓ Always consult with healthcare professionals</p>
         </div>

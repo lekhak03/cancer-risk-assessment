@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import WelcomePage from './components/WelcomePage';
 import Questionnaire from './components/Questionnaire';
 import BasicQuestionnaire from './components/BasicQuestionnaire';

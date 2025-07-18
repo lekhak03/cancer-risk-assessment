@@ -1693,6 +1693,6 @@ function calculateLiverCancerRisk(userData: UserData): RiskAssessment {
     nonModifiableFactors,
     recommendations,
     screeningTimeline: [],
-    riskReductionPotential: userData.alcoholConsumption === 'heavy' ? 50 : 20
+    riskReductionPotential: userData.alcoholConsumption?.bingeFrequency === 'daily' ? 50 : 20
   };
 }
