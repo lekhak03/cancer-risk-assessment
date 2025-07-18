@@ -20,6 +20,7 @@ type Question = {
   subtitle?: string;
   // The following line fixes the error:
   condition?: (data: UserData) => boolean;
+  defaultValue?: any;
 };
 
 type Section = {
@@ -42,6 +43,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
           type: 'number' as const,
           placeholder: 'Enter your age',
           required: true,
+          defaultValue: 40,
         },
         {
           id: 'biologicalSex',
@@ -53,6 +55,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'other', label: 'Other' },
           ],
           required: true,
+          defaultValue: 'other',
         },
         {
           id: 'raceEthnicity',
@@ -69,6 +72,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'other', label: 'Other/Mixed' },
           ],
           required: true,
+          defaultValue: 'other',
         },
         {
           id: 'height',
@@ -76,6 +80,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
           type: 'number' as const,
           placeholder: 'Height in centimeters (e.g., 170)',
           required: true,
+          defaultValue: 170,
         },
         {
           id: 'weight',
@@ -83,6 +88,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
           type: 'number' as const,
           placeholder: 'Weight in kilograms (e.g., 70)',
           required: true,
+          defaultValue: 70,
         },
         {
           id: 'countryOfBirth',
@@ -90,6 +96,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
           subtitle: 'Environmental exposures vary by geographic region',
           type: 'text' as const,
           placeholder: 'Enter country of birth',
+          defaultValue: '',
         },
         {
           id: 'currentLocation',
@@ -97,6 +104,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
           subtitle: 'Current environmental factors and healthcare access',
           type: 'text' as const,
           placeholder: 'City, State/Province, Country',
+          defaultValue: '',
         },
       ],
     },
@@ -121,6 +129,9 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'other', label: 'Other cancer types' },
             { value: 'none', label: 'No parental cancer history' },
           ],
+          defaultValue: {
+            breast: false, lung: false, colorectal: false, prostate: false, ovarian: false, pancreatic: false, skin: false, liver: false, kidney: false, bladder: false, other: false, none: false
+          },
         },
         {
           id: 'familyHistorySiblings',
@@ -140,6 +151,9 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'other', label: 'Other cancer types' },
             { value: 'none', label: 'No sibling cancer history' },
           ],
+          defaultValue: {
+            breast: false, lung: false, colorectal: false, prostate: false, ovarian: false, pancreatic: false, skin: false, liver: false, kidney: false, bladder: false, other: false, none: false
+          },
         },
         {
           id: 'earlyOnsetCancers',
@@ -151,6 +165,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'no', label: 'No' },
             { value: 'unknown', label: 'Unknown' },
           ],
+          defaultValue: 'unknown',
         },
         {
           id: 'multipleRelativesSameCancer',
@@ -162,6 +177,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'no', label: 'No' },
             { value: 'unknown', label: 'Unknown' },
           ],
+          defaultValue: 'unknown',
         },
         {
           id: 'ashkenaziJewish',
@@ -173,6 +189,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'no', label: 'No' },
             { value: 'unknown', label: 'Unknown' },
           ],
+          defaultValue: 'unknown',
         },
         {
           id: 'geneticTesting',
@@ -186,6 +203,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'no', label: 'No, never tested' },
             { value: 'interested', label: 'No, but interested in testing' },
           ],
+          defaultValue: 'unknown',
         },
       ],
     },
@@ -201,6 +219,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'no', label: 'No' },
           ],
           required: true,
+          defaultValue: 'no',
         },
         {
           id: 'previousCancerDetails',
@@ -208,6 +227,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
           type: 'text' as const,
           placeholder: 'Enter cancer type and year of diagnosis',
           condition: (data: UserData) => typeof data.previousCancer === 'string' ? data.previousCancer === 'yes' : data.previousCancer?.diagnosed === true,
+          defaultValue: '',
         },
         {
           id: 'benignConditions',
@@ -222,6 +242,9 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'dysplastic_nevi', label: 'Dysplastic nevi (atypical moles)' },
             { value: 'none', label: 'None of the above' },
           ],
+          defaultValue: {
+            polyps: false, atypical_hyperplasia: false, lcis: false, barrett_esophagus: false, dysplastic_nevi: false, none: false
+          },
         },
         {
           id: 'chronicConditions',
@@ -239,6 +262,9 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'endometriosis', label: 'Endometriosis' },
             { value: 'none', label: 'None of the above' },
           ],
+          defaultValue: {
+            diabetes: false, ibd: false, hepatitisB: false, hepatitisC: false, hiv: false, autoimmune: false, pcos: false, endometriosis: false, none: false
+          },
         },
         {
           id: 'radiationExposure',
@@ -252,6 +278,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'no', label: 'No' },
             { value: 'unknown', label: 'Unknown' },
           ],
+          defaultValue: 'unknown',
         },
         {
           id: 'immunosuppression',
@@ -264,6 +291,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'yes_other', label: 'Yes, for other reasons' },
             { value: 'no', label: 'No' },
           ],
+          defaultValue: 'unknown',
         },
       ],
     },
@@ -277,6 +305,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
           type: 'number' as const,
           placeholder: 'Age in years',
           condition: (data: UserData) => data.biologicalSex === 'female',
+          defaultValue: 12,
         },
         {
           id: 'pregnancies',
@@ -285,6 +314,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
           type: 'number' as const,
           placeholder: 'Number of pregnancies (0 if none)',
           condition: (data: UserData) => data.biologicalSex === 'female',
+          defaultValue: 0,
         },
         {
           id: 'ageAtFirstBirth',
@@ -293,6 +323,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
           type: 'number' as const,
           placeholder: 'Age at first birth',
           condition: (data: UserData) => data.biologicalSex === 'female' && (data.pregnancies || 0) > 0,
+          defaultValue: 25,
         },
         {
           id: 'breastfeedingMonths',
@@ -301,6 +332,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
           type: 'number' as const,
           placeholder: 'Total months across all children',
           condition: (data: UserData) => data.biologicalSex === 'female' && (data.pregnancies || 0) > 0,
+          defaultValue: 0,
         },
         {
           id: 'birthControlUse',
@@ -315,6 +347,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'current', label: 'Currently using' },
           ],
           condition: (data: UserData) => data.biologicalSex === 'female',
+          defaultValue: 'never',
         },
         {
           id: 'menopauseStatus',
@@ -327,6 +360,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'surgical', label: 'Surgical menopause (hysterectomy)' },
           ],
           condition: (data: UserData) => data.biologicalSex === 'female' && (data.age || 0) > 35,
+          defaultValue: 'premenopausal',
         },
         {
           id: 'ageAtMenopause',
@@ -335,6 +369,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
           type: 'number' as const,
           placeholder: 'Age at menopause',
           condition: (data: UserData) => data.biologicalSex === 'female' && (data.menopauseStatus === 'postmenopausal' || data.menopauseStatus === 'surgical'),
+          defaultValue: 50,
         },
         {
           id: 'hrtUse',
@@ -348,6 +383,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'former_long', label: 'Used for 5+ years' },
           ],
           condition: (data: UserData) => data.biologicalSex === 'female',
+          defaultValue: 'never',
         },
         {
           id: 'breastDensity',
@@ -362,6 +398,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'unknown', label: 'Unknown' },
           ],
           condition: (data: UserData) => data.biologicalSex === 'female',
+          defaultValue: 'unknown',
         },
       ],
     },
@@ -378,6 +415,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'current', label: 'Current smoker' },
           ],
           required: true,
+          defaultValue: 'never',
         },
         {
           id: 'smokingPackYears',
@@ -386,6 +424,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
           type: 'number' as const,
           placeholder: 'Enter pack-years',
           condition: (data: UserData) => data.smokingStatus !== 'never',
+          defaultValue: 0,
         },
         {
           id: 'ageStartedSmoking',
@@ -393,6 +432,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
           type: 'number' as const,
           placeholder: 'Age when started',
           condition: (data: UserData) => data.smokingStatus !== 'never',
+          defaultValue: 14,
         },
         {
           id: 'ageQuitSmoking',
@@ -400,6 +440,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
           type: 'number' as const,
           placeholder: 'Age when quit',
           condition: (data: UserData) => data.smokingStatus === 'former',
+          defaultValue: 25,
         },
         {
           id: 'secondhandSmoke',
@@ -410,6 +451,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'occasionally', label: 'Occasionally' },
             { value: 'no', label: 'No' },
           ],
+          defaultValue: 'no',
         },
         {
           id: 'otherTobacco',
@@ -424,6 +466,9 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'ecigarettes', label: 'E-cigarettes/vaping' },
             { value: 'none', label: 'None' },
           ],
+          defaultValue: {
+            cigars: false, pipes: false, chewing_tobacco: false, snuff: false, ecigarettes: false, none: false
+          },
         },
         {
           id: 'alcoholConsumption',
@@ -436,6 +481,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'heavy', label: 'Heavy (15+ drinks per week)' },
           ],
           required: true,
+          defaultValue: 'never',
         },
         {
           id: 'bingeFrequency',
@@ -447,14 +493,30 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'weekly', label: 'Weekly' },
             { value: 'daily', label: 'Daily or almost daily' },
           ],
-          condition: (data: UserData) => data.alcoholConsumption?.currentStatus !== 'never',
+          condition: (data: UserData) => {
+            if (typeof data.alcoholConsumption === 'string') {
+              return data.alcoholConsumption !== 'never';
+            } else if (typeof data.alcoholConsumption === 'object' && data.alcoholConsumption !== null) {
+              return data.alcoholConsumption.currentStatus !== 'never';
+            }
+            return false;
+          },
+          defaultValue: 'never',
         },
         {
           id: 'alcoholYears',
           title: 'For how many years have you been drinking alcohol regularly?',
           type: 'number' as const,
           placeholder: 'Number of years',
-          condition: (data: UserData) => data.alcoholConsumption?.currentStatus !== 'never',
+          condition: (data: UserData) => {
+            if (typeof data.alcoholConsumption === 'string') {
+              return data.alcoholConsumption !== 'never';
+            } else if (typeof data.alcoholConsumption === 'object' && data.alcoholConsumption !== null) {
+              return data.alcoholConsumption.currentStatus !== 'never';
+            }
+            return false;
+          },
+          defaultValue: 0,
         },
       ],
     },
@@ -473,6 +535,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: '6+', label: '6+ servings' },
           ],
           required: true,
+          defaultValue: '2-3',
         },
         {
           id: 'redMeatConsumption',
@@ -486,6 +549,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'daily', label: 'Daily or almost daily' },
           ],
           required: true,
+          defaultValue: 'never',
         },
         {
           id: 'processedMeat',
@@ -498,6 +562,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'daily', label: 'Daily or almost daily' },
           ],
           required: true,
+          defaultValue: 'never',
         },
         {
           id: 'fiberIntake',
@@ -509,6 +574,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'moderate', label: 'Moderate (some whole grains)' },
             { value: 'high', label: 'High (mostly whole foods)' },
           ],
+          defaultValue: 'moderate',
         },
         {
           id: 'physicalActivity',
@@ -521,6 +587,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'high', label: 'High (150+ minutes)' },
           ],
           required: true,
+          defaultValue: 'moderate',
         },
         {
           id: 'sedentaryTime',
@@ -533,6 +600,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'high', label: 'More than 8 hours' },
           ],
           required: true,
+          defaultValue: 'moderate',
         },
         {
           id: 'dietType',
@@ -545,6 +613,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'vegan', label: 'Vegan' },
             { value: 'other', label: 'Other' },
           ],
+          defaultValue: 'western',
         },
         {
           id: 'supplements',
@@ -559,6 +628,9 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'antioxidants', label: 'Antioxidant supplements' },
             { value: 'none', label: 'None' },
           ],
+          defaultValue: {
+            vitamin_d: false, calcium: false, multivitamin: false, omega3: false, antioxidants: false, none: false
+          },
         },
       ],
     },
@@ -580,6 +652,9 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'diesel', label: 'Diesel exhaust' },
             { value: 'none', label: 'None of the above' },
           ],
+          defaultValue: {
+            asbestos: false, chemicals: false, radiation: false, pesticides: false, metals: false, dust: false, diesel: false, none: false
+          },
         },
         {
           id: 'asbestosYears',
@@ -587,6 +662,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
           type: 'number' as const,
           placeholder: 'Number of years',
           condition: (data: UserData) => !!data.occupationalExposures?.asbestos,
+          defaultValue: 0,
         },
         {
           id: 'shiftWork',
@@ -598,6 +674,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'occasionally', label: 'Occasionally' },
             { value: 'regularly', label: 'Regularly (most of career)' },
           ],
+          defaultValue: 'never',
         },
         {
           id: 'airPollution',
@@ -609,6 +686,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'poor', label: 'Poor (urban/industrial area)' },
           ],
           required: true,
+          defaultValue: 'good',
         },
         {
           id: 'radonExposure',
@@ -620,6 +698,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'high', label: 'Yes, levels were elevated' },
             { value: 'never', label: 'Never tested' },
           ],
+          defaultValue: 'never',
         },
         {
           id: 'waterQuality',
@@ -631,6 +710,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'fair', label: 'Fair (some concerns)' },
             { value: 'poor', label: 'Poor (known contamination)' },
           ],
+          defaultValue: 'good',
         },
         {
           id: 'pesticideExposure',
@@ -643,6 +723,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'minimal', label: 'Minimal exposure' },
             { value: 'none', label: 'No exposure' },
           ],
+          defaultValue: 'none',
         },
       ],
     },
@@ -663,6 +744,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: '6', label: 'Type VI: Never burns, deeply pigmented (black)' },
           ],
           required: true,
+          defaultValue: '3',
         },
         {
           id: 'sunExposure',
@@ -674,6 +756,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'high', label: 'High (outdoor job or frequent sun exposure)' },
           ],
           required: true,
+          defaultValue: 'moderate',
         },
         {
           id: 'severeSunburns',
@@ -687,6 +770,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: '6+', label: '6 or more sunburns' },
           ],
           required: true,
+          defaultValue: '0',
         },
         {
           id: 'tanningBedUse',
@@ -698,6 +782,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'regular', label: 'Regular use (1+ years)' },
           ],
           required: true,
+          defaultValue: 'never',
         },
         {
           id: 'tanningBedYears',
@@ -705,6 +790,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
           type: 'number' as const,
           placeholder: 'Number of years',
           condition: (data: UserData) => data.tanningBedUse !== 'never',
+          defaultValue: 0,
         },
         {
           id: 'sunProtection',
@@ -717,6 +803,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'always', label: 'Always' },
           ],
           required: true,
+          defaultValue: 'never',
         },
         {
           id: 'moleChanges',
@@ -728,6 +815,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'no', label: 'No changes noticed' },
             { value: 'dont_check', label: "I don't regularly check" },
           ],
+          defaultValue: 'dont_check',
         },
       ],
     },
@@ -745,6 +833,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'enhanced', label: 'Enhanced screening (high risk)' },
           ],
           condition: (data: UserData) => data.biologicalSex === 'female' && (data.age || 0) >= 35,
+          defaultValue: 'never',
         },
         {
           id: 'papSmearHistory',
@@ -757,6 +846,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'abnormal', label: 'History of abnormal results' },
           ],
           condition: (data: UserData) => data.biologicalSex === 'female' && (data.age || 0) >= 21,
+          defaultValue: 'never',
         },
         {
           id: 'colonoscopyHistory',
@@ -769,6 +859,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'polyps', label: 'History of polyps found' },
           ],
           condition: (data: UserData) => (data.age || 0) >= 45,
+          defaultValue: 'never',
         },
         {
           id: 'prostateScreening',
@@ -781,6 +872,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'elevated', label: 'History of elevated PSA' },
           ],
           condition: (data: UserData) => data.biologicalSex === 'male' && (data.age || 0) >= 45,
+          defaultValue: 'never',
         },
         {
           id: 'skinCancerScreening',
@@ -792,6 +884,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'annual', label: 'Annual screening' },
             { value: 'frequent', label: 'More than once per year' },
           ],
+          defaultValue: 'never',
         },
         {
           id: 'lungScreening',
@@ -804,6 +897,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'not_eligible', label: 'Not eligible/recommended' },
           ],
           condition: (data: UserData) => data.smokingStatus !== 'never' && (data.age || 0) >= 50,
+          defaultValue: 'never',
         },
         {
           id: 'healthcareAccess',
@@ -816,6 +910,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'excellent', label: 'Excellent (comprehensive coverage)' },
           ],
           required: true,
+          defaultValue: 'good',
         },
         {
           id: 'primaryCareProvider',
@@ -826,6 +921,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'yes_infrequent', label: 'Yes, but see infrequently' },
             { value: 'no', label: 'No regular provider' },
           ],
+          defaultValue: 'yes',
         },
       ],
     },
@@ -843,6 +939,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'high', label: 'High stress' },
             { value: 'very_high', label: 'Very high stress' },
           ],
+          defaultValue: 'moderate',
         },
         {
           id: 'sleepQuality',
@@ -855,6 +952,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'fair', label: 'Fair (some sleep issues)' },
             { value: 'poor', label: 'Poor (chronic sleep problems)' },
           ],
+          defaultValue: 'good',
         },
         {
           id: 'socialSupport',
@@ -867,6 +965,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'fair', label: 'Fair (limited support)' },
             { value: 'poor', label: 'Poor (isolated)' },
           ],
+          defaultValue: 'good',
         },
         {
           id: 'mentalHealthHistory',
@@ -880,6 +979,9 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'other', label: 'Other mental health conditions' },
             { value: 'none', label: 'None' },
           ],
+          defaultValue: {
+            depression: false, anxiety: false, ptsd: false, other: false, none: false
+          },
         },
         {
           id: 'socioeconomicStatus',
@@ -893,6 +995,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'upper_middle', label: 'Upper middle class' },
             { value: 'high', label: 'High income' },
           ],
+          defaultValue: 'middle',
         },
         {
           id: 'education',
@@ -905,10 +1008,36 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
             { value: 'college_degree', label: 'College degree' },
             { value: 'graduate_degree', label: 'Graduate/professional degree' },
           ],
+          defaultValue: 'high_school',
         },
       ],
     },
   ];
+
+  const getAllDefaultValues = () => {
+    const defaults: Record<string, any> = {};
+    sections.forEach(section => {
+      section.questions.forEach(q => {
+        // Only include questions that are visible for the current userData
+        if (!q.condition || q.condition(userData)) {
+          if (q.defaultValue !== undefined) {
+            defaults[q.id] = q.defaultValue;
+          } else if (q.type === 'checkbox') {
+            // For checkboxes, default to all options false
+            if (q.options) {
+              defaults[q.id] = q.options.reduce((acc, opt) => {
+                acc[opt.value] = false;
+                return acc;
+              }, {} as Record<string, boolean>);
+            }
+          } else {
+            defaults[q.id] = '';
+          }
+        }
+      });
+    });
+    return defaults;
+  };
 
   const currentSectionData = sections[currentSection];
   const visibleQuestions = currentSectionData.questions.filter(q => 
@@ -930,7 +1059,9 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
       setCurrentSection(prev => prev + 1);
       setCurrentQuestion(0);
     } else {
-      onComplete(userData);
+      const defaults = getAllDefaultValues();
+      const merged = { ...defaults, ...userData };
+      onComplete(merged);
     }
   };
 
@@ -966,9 +1097,39 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, onBack, darkM
   const progress = (completedQuestions / totalQuestions) * 100;
   const isLastQuestion = currentSection === sections.length - 1 && currentQuestion === visibleQuestions.length - 1;
 
+  // Remove the Loading... fallback and auto-advance if currentQuestion is out of bounds
+  React.useEffect(() => {
+    // If the current section has no visible questions, skip to the next section
+    if (visibleQuestions.length === 0) {
+      if (currentSection < sections.length - 1) {
+        setCurrentSection(currentSection + 1);
+        setCurrentQuestion(0);
+      } else {
+        // No questions left at all, complete with defaults
+        const defaults = getAllDefaultValues();
+        const merged = { ...defaults, ...userData };
+        onComplete(merged);
+      }
+    } else if (currentQuestion >= visibleQuestions.length) {
+      // If currentQuestion is out of bounds, auto-advance
+      if (currentSection < sections.length - 1) {
+        setCurrentSection(currentSection + 1);
+        setCurrentQuestion(0);
+      } else {
+        const defaults = getAllDefaultValues();
+        const merged = { ...defaults, ...userData };
+        onComplete(merged);
+      }
+    }
+    // eslint-disable-next-line
+  }, [currentSection, userData, currentQuestion, visibleQuestions.length]);
+
+  // Guard: If currentQuestionData is undefined, do not render QuestionCard or try to access its properties
   if (!currentQuestionData) {
-    return <div>Loading...</div>;
+    return null;
   }
+
+  // Remove the Loading... fallback and do not return null
 
   return (
     <div className="min-h-screen p-4 flex items-center justify-center">

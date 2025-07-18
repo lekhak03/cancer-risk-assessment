@@ -27,6 +27,7 @@ const BasicQuestionnaire: React.FC<BasicQuestionnaireProps> = ({
       type: 'number' as const,
       placeholder: 'Enter your age',
       required: true,
+      defaultValue: 40,
     },
     {
       id: 'biologicalSex',
@@ -38,6 +39,7 @@ const BasicQuestionnaire: React.FC<BasicQuestionnaireProps> = ({
         { value: 'other', label: 'Other' },
       ],
       required: true,
+      defaultValue: 'other',
     },
     {
       id: 'raceEthnicity',
@@ -54,6 +56,7 @@ const BasicQuestionnaire: React.FC<BasicQuestionnaireProps> = ({
         { value: 'other', label: 'Other/Mixed' },
       ],
       required: true,
+      defaultValue: 'other',
     },
     {
       id: 'height',
@@ -61,6 +64,7 @@ const BasicQuestionnaire: React.FC<BasicQuestionnaireProps> = ({
       type: 'number' as const,
       placeholder: 'Height in centimeters (e.g., 170)',
       required: true,
+      defaultValue: 170,
     },
     {
       id: 'weight',
@@ -68,6 +72,7 @@ const BasicQuestionnaire: React.FC<BasicQuestionnaireProps> = ({
       type: 'number' as const,
       placeholder: 'Weight in kilograms (e.g., 70)',
       required: true,
+      defaultValue: 70,
     },
     {
       id: 'familyHistory',
@@ -85,6 +90,9 @@ const BasicQuestionnaire: React.FC<BasicQuestionnaireProps> = ({
         { value: 'other', label: 'Other cancer types' },
         { value: 'none', label: 'No family history of cancer' },
       ],
+      defaultValue: {
+        breast: false, lung: false, colorectal: false, prostate: false, ovarian: false, skin: false, pancreatic: false, other: false, none: false
+      },
     },
     {
       id: 'smokingStatus',
@@ -96,6 +104,7 @@ const BasicQuestionnaire: React.FC<BasicQuestionnaireProps> = ({
         { value: 'current', label: 'Current smoker' },
       ],
       required: true,
+      defaultValue: 'never',
     },
     {
       id: 'smokingPackYears',
@@ -104,6 +113,7 @@ const BasicQuestionnaire: React.FC<BasicQuestionnaireProps> = ({
       type: 'number' as const,
       placeholder: 'Enter pack-years (e.g., 10)',
       condition: (data: BasicUserData) => data.smokingStatus !== 'never',
+      defaultValue: 0,
     },
     {
       id: 'alcoholConsumption',
@@ -116,6 +126,7 @@ const BasicQuestionnaire: React.FC<BasicQuestionnaireProps> = ({
         { value: 'heavy', label: 'Heavy (15+ drinks per week)' },
       ],
       required: true,
+      defaultValue: 'never',
     },
     {
       id: 'physicalActivity',
@@ -128,6 +139,7 @@ const BasicQuestionnaire: React.FC<BasicQuestionnaireProps> = ({
         { value: 'high', label: 'High (150+ minutes)' },
       ],
       required: true,
+      defaultValue: 'moderate',
     },
     {
       id: 'fruitsVegetables',
@@ -140,6 +152,7 @@ const BasicQuestionnaire: React.FC<BasicQuestionnaireProps> = ({
         { value: '6+', label: '6+ servings' },
       ],
       required: true,
+      defaultValue: '2-3',
     },
     {
       id: 'redMeatConsumption',
@@ -152,6 +165,7 @@ const BasicQuestionnaire: React.FC<BasicQuestionnaireProps> = ({
         { value: 'daily', label: 'Daily or almost daily' },
       ],
       required: true,
+      defaultValue: 'never',
     },
     {
       id: 'sunExposure',
@@ -163,6 +177,7 @@ const BasicQuestionnaire: React.FC<BasicQuestionnaireProps> = ({
         { value: 'high', label: 'High (outdoor job or frequent sun exposure)' },
       ],
       required: true,
+      defaultValue: 'moderate',
     },
     {
       id: 'skinType',
@@ -178,6 +193,7 @@ const BasicQuestionnaire: React.FC<BasicQuestionnaireProps> = ({
         { value: '6', label: 'Type VI: Never burns, deeply pigmented (black)' },
       ],
       required: true,
+      defaultValue: '3',
     },
     {
       id: 'ageAtMenarche',
@@ -186,6 +202,7 @@ const BasicQuestionnaire: React.FC<BasicQuestionnaireProps> = ({
       type: 'number' as const,
       placeholder: 'Age in years (e.g., 13)',
       condition: (data: BasicUserData) => data.biologicalSex === 'female',
+      defaultValue: 12,
     },
     {
       id: 'pregnancies',
@@ -194,6 +211,7 @@ const BasicQuestionnaire: React.FC<BasicQuestionnaireProps> = ({
       type: 'number' as const,
       placeholder: 'Number of pregnancies (0 if none)',
       condition: (data: BasicUserData) => data.biologicalSex === 'female',
+      defaultValue: 0,
     },
     {
       id: 'mammogramHistory',
@@ -207,6 +225,7 @@ const BasicQuestionnaire: React.FC<BasicQuestionnaireProps> = ({
         { value: 'not_applicable', label: 'Not applicable (male)' },
       ],
       condition: (data: BasicUserData) => data.biologicalSex === 'female' || !data.biologicalSex,
+      defaultValue: 'never',
     },
     {
       id: 'colonoscopyHistory',
@@ -219,8 +238,31 @@ const BasicQuestionnaire: React.FC<BasicQuestionnaireProps> = ({
         { value: 'polyps', label: 'History of polyps found' },
       ],
       condition: (data: BasicUserData) => (data.age || 0) >= 40,
+      defaultValue: 'never',
     },
   ];
+
+  // Place getAllDefaultValues above handleNext
+  const getAllDefaultValues = () => {
+    const defaults: Record<string, any> = {};
+    questions.forEach(q => {
+      if (!q.condition || q.condition(userData)) {
+        if (q.defaultValue !== undefined) {
+          defaults[q.id] = q.defaultValue;
+        } else if (q.type === 'checkbox') {
+          if (q.options) {
+            defaults[q.id] = q.options.reduce((acc, opt) => {
+              acc[opt.value] = false;
+              return acc;
+            }, {} as Record<string, boolean>);
+          }
+        } else {
+          defaults[q.id] = '';
+        }
+      }
+    });
+    return defaults;
+  };
 
   const visibleQuestions = questions.filter(q => 
     !q.condition || q.condition(userData)
@@ -238,7 +280,9 @@ const BasicQuestionnaire: React.FC<BasicQuestionnaireProps> = ({
     if (currentQuestion < visibleQuestions.length - 1) {
       setCurrentQuestion(prev => prev + 1);
     } else {
-      onComplete(userData);
+      const defaults = getAllDefaultValues();
+      const merged = { ...defaults, ...userData };
+      onComplete(merged);
     }
   };
 
