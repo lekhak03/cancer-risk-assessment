@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://cancerrisk.com/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
+
+# Disallow assessment results pages (they contain personal data)
+Disallow: /results
+Disallow: /basic-results
+Disallow: /questionnaire
+Disallow: /basic-questionnaire 

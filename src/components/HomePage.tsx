@@ -1,5 +1,6 @@
 import React from 'react';
 import { Heart, Users, TrendingUp, Star, Zap } from 'lucide-react';
+import SEO from './SEO';
 
 interface HomePageProps {
   onStart: (isPremium?: boolean) => void;
@@ -8,7 +9,14 @@ interface HomePageProps {
 
 const HomePage: React.FC<HomePageProps> = ({ onStart, darkMode }) => {
   return (
-    <div className="min-h-screen pt-20 flex items-center justify-center p-4">
+    <>
+      <SEO 
+        title="Cancer Risk Assessment | Professional Health Evaluation Platform"
+        description="Take control of your health with our comprehensive cancer risk assessment. Get personalized insights based on the latest medical research and guidelines. Free and premium assessments available."
+        keywords="cancer risk assessment, health evaluation, cancer screening, personalized health, medical assessment, cancer prevention, health check, risk factors"
+        url="/"
+      />
+      <div className="min-h-screen pt-20 flex items-center justify-center p-4">
       <div className="max-w-5xl mx-auto text-center">
         <div className="mb-8">
           <div className={`inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full mb-6 shadow-lg`}>
@@ -176,6 +184,7 @@ const HomePage: React.FC<HomePageProps> = ({ onStart, darkMode }) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

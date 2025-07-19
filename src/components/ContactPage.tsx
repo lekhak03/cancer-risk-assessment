@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Clock, Send, MessageSquare, Shield, Users } from 'lucide-react';
+import SEO from './SEO';
 
 interface ContactPageProps {
   darkMode: boolean;
@@ -31,6 +32,11 @@ const ContactPage: React.FC<ContactPageProps> = ({ darkMode }) => {
 
   return (
     <div className="min-h-screen pt-20 pb-16 px-4">
+      <SEO
+        title="Contact Us - Cancer Risk Assessment"
+        description="Get in touch with our team for questions about our cancer risk assessment. We offer technical support, medical questions, privacy & security, partnership & business inquiries."
+        keywords="contact, cancer risk assessment, technical support, medical questions, privacy, security, partnership, business"
+      />
       <div className="max-w-6xl mx-auto">
         {/* Hero Section */}
         <div className="text-center mb-16">
