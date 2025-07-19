@@ -1,5 +1,5 @@
 import React from 'react';
-import { RotateCcw, AlertTriangle, CheckCircle, Info, TrendingUp, Shield, Star, ArrowRight } from 'lucide-react';
+import { RotateCcw, AlertTriangle, CheckCircle, Info, TrendingUp, Heart, Star, ArrowRight } from 'lucide-react';
 import { BasicUserData, BasicRiskAssessment } from '../types/UserData';
 import { calculateBasicRisks } from '../utils/basicRiskCalculation';
 
@@ -26,7 +26,7 @@ const BasicResults: React.FC<BasicResultsProps> = ({ userData, onRestart, onUpgr
     total + assessment.recommendations.filter(r => r.priority === 'high').length, 0);
 
   return (
-    <div className="min-h-screen p-4">
+    <div className="min-h-screen pt-20 p-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
@@ -36,7 +36,7 @@ const BasicResults: React.FC<BasicResultsProps> = ({ userData, onRestart, onUpgr
             ) : overallRiskLevel === 'Low' ? (
               <CheckCircle className="w-10 h-10 text-white" />
             ) : (
-              <Shield className="w-10 h-10 text-white" />
+              <Heart className="w-10 h-10 text-white" />
             )}
           </div>
           <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 bg-clip-text text-transparent mb-4">

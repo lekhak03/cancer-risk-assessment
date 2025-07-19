@@ -1,5 +1,5 @@
 import React from 'react';
-import { RotateCcw, AlertTriangle, CheckCircle, Info, TrendingUp, Shield } from 'lucide-react';
+import { RotateCcw, AlertTriangle, CheckCircle, Info, TrendingUp, Heart, BarChart3 } from 'lucide-react';
 import { UserData, RiskAssessment } from '../types/UserData';
 import { calculateRisks } from '../utils/riskCalculation';
 import RiskCard from './RiskCard';
@@ -29,7 +29,7 @@ const Results: React.FC<ResultsProps> = ({ userData, onRestart, darkMode }) => {
     total + assessment.recommendations.filter(r => r.priority === 'high').length, 0);
 
   return (
-    <div className="min-h-screen p-4">
+    <div className="min-h-screen pt-20 p-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
@@ -39,7 +39,7 @@ const Results: React.FC<ResultsProps> = ({ userData, onRestart, darkMode }) => {
             ) : overallRiskLevel === 'Low' ? (
               <CheckCircle className="w-10 h-10 text-white" />
             ) : (
-              <Shield className="w-10 h-10 text-white" />
+              <Heart className="w-10 h-10 text-white" />
             )}
           </div>
           <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 bg-clip-text text-transparent mb-4">
@@ -207,7 +207,7 @@ const Results: React.FC<ResultsProps> = ({ userData, onRestart, darkMode }) => {
             : 'bg-white/70 border-white/20'
         }`}>
           <h3 className={`text-2xl font-bold mb-6 flex items-center ${darkMode ? 'text-white' : 'text-gray-800'}`}>
-            <Shield className="w-6 h-6 mr-3 text-blue-500" />
+            <BarChart3 className="w-6 h-6 mr-3 text-blue-500" />
             Recommended Screening Timeline
           </h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
